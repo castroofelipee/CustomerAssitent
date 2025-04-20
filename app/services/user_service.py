@@ -1,16 +1,18 @@
-from sqlalchemy.orm import Session
-from sqlalchemy.ext.asyncio import AsyncSession
-from passlib.context import CryptContext
-from fastapi import Depends, HTTPException
-from app.database.db import get_db
-from app.models.models import User
-from app.schemas.auth_schema import UserCreate
-from app.config import settings
 import uuid
 from datetime import timedelta
 
+from fastapi import Depends, HTTPException
+from passlib.context import CryptContext
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
+
+from app.config import settings
+from app.database.db import get_db
+from app.models.models import User
+from app.schemas.auth_schema import UserCreate
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 class UserService:
     def __init__(self, db: Session = Depends(get_db)):
@@ -28,9 +30,7 @@ class UserService:
 
         hashed_pw = self.hash_password(user_data.password)
         new_user = User(
-            id=uuid.uuid4(),
-            email=user_data.email,
-            hashed_password=hashed_pw
+            id=uuid.uuid4(), email=user_data.email, hashed_password=hashed_pw
         )
         self.db.add(new_user)
         self.db.commit()
@@ -52,8 +52,11 @@ class AuthService:
 
     def create_access_token(self, data: dict, expires_delta: timedelta = None):
         to_encode = data.copy()
-        expire = datetime.utcnow() + (expires_delta or timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES))
+        expire = datetime.utcnow() + (
+            expires_delta or timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+        )
         to_encode.update({"exp": expire})
-        encoded_jwt = jwt.encode(to_encode, settings.JWT_SECRET_KEY, algorithm=settings.JWT_ALGORITHM)
+        encoded_jwt = jwt.encode(
+            to_encode, settings.JWT_SECRET_KEY, algorithm=settings.JWT_ALGORITHM
+        )
         return encoded_jwt
-
