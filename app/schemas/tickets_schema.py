@@ -17,3 +17,28 @@ class Ticket(TicketBase):
     
     class Config:
         from_attributes = True
+
+class MessageCreate(BaseModel):
+    content: str
+
+class MessageOut(BaseModel):
+    id: UUID
+    content: str
+    is_ai: bool
+    created_at: datetime
+
+    class Config:
+        orm_mode = True
+
+class TicketOut(BaseModel):
+    id: UUID
+    title: str
+    status: str
+    created_at: datetime
+
+    class Config:
+        orm_mode = True
+
+class TicketWithMessages(TicketOut):
+    messages: list[MessageOut]
+
