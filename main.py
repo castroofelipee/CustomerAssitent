@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 
 from app.database.db import init_db
-from app.routers import login, signup
+from app.routers import login, signup, tickets
 
 
 @asynccontextmanager
@@ -26,3 +26,4 @@ async def set_secure_headers(request: Request, call_next):
 
 app.include_router(signup.router)
 app.include_router(login.router)
+app.include_router(tickets.router)

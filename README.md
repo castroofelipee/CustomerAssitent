@@ -13,12 +13,12 @@ This project is a solution to the Customer Support Assistant Backend Assessment.
 
 ## Environment setup
 ```
-git clone git@gitlab.com:nan-systems/pratikum.git
+git clone https://github.com/castroofelipee/CustomerAssitent.git
 ```
 
 And cd into the root folder:
 ```
-cd pratikum
+cd CustomerAssitent
 ```
 
 #### 1. Copy env variables
