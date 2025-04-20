@@ -11,6 +11,44 @@ This project is a solution to the Customer Support Assistant Backend Assessment.
 - Docker & Docker Compose – Containerization
 - Groq API – AI assistant integration
 
+## Environment setup
+```
+git clone git@gitlab.com:nan-systems/pratikum.git
+```
+
+And cd into the root folder:
+```
+cd pratikum
+```
+
+#### 1. Copy env variables
+
+```
+cp env.example .env
+```
+
+### Run the services
+
+Ensure you have Docker and Docker Compose installed. The spin the application with:
+
+```
+docker compose up
+```
+
+This will build the application image and start the postgres database.
+
+### Run the services with service-oriented
+Make sure you have all dependencies installed. Run this:
+```
+poetry install
+```
+after that, you just need run the command:
+```
+uvicorn main:app --reload
+```
+
+Now, you can able to see the API docs
+
 ## Architecture & Design
 
 The codebase follows a **service-oriented architecture**, emphasizing **separation of concerns**, **testability**, and **clean design**.
