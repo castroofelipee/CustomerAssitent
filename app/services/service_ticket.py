@@ -1,6 +1,6 @@
 from typing import List
 from app.models.models import Ticket, User
-from app.schemas.tickets_service import TicketCreate, Ticket
+from app.schemas.tickets_schema import TicketCreate
 
 class TicketService:
     def __init__(self, db):
