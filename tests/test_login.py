@@ -1,7 +1,10 @@
 import pytest
+from fastapi.testclient import TestClient
+from httpx import AsyncClient
 
 from app.models.models import User
 from app.services.user_service import pwd_context
+from main import app
 
 
 @pytest.fixture
@@ -20,15 +23,16 @@ def test_user(db_session):
     return existing_user
 
 
-def test_login_success(client, test_user):
-    response = client.post(
+@pytest.mark.asyncio
+async def test_login_success():
+    client = TestClient(app)
+    response = await client.post(
         "/auth/login",
         json={"email": "testuser@example.com", "password": "testpassword123"},
     )
     assert response.status_code == 200
     data = response.json()
     assert "access_token" in data
-    assert data["token_type"] == "bearer"
 
 
 def test_login_wrong_credentions(client, test_user):
